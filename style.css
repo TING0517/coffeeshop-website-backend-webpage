@@ -4,6 +4,10 @@
     --text-dark: #1a202c;       /* 輸入框內深色字 */
 }
 
+* {
+  font-family: "Noto Sans TC", sans-serif;
+}
+
 /* 基礎頁面設定*/
 body {
     background-color: #5f75a5;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>品牌後台管理系統</title>
+    <title>Moonlight Café 後台管理系統</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -13,16 +13,25 @@
 <body>
     <nav class="navbar navbar-expand-lg sticky-top custom-navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">🛒 品牌後台管理系統</a>
+            <a class="navbar-brand" href="index.html">🛒 Moonlight Café 後台管理系統</a>
             <button id="logout-btn" class="btn btn-outline-danger btn-sm" style="display: none;">登出系統</button>
         </div>
     </nav>
 
     <div class="container mt-5">
         <div id="login-section" class="text-center py-5">
-            <h2 class="mb-4">請先驗證商家身分</h2>
-            <p class="text-muted">本系統僅供授權管理員使用</p>
-            <button id="login-btn" class="btn btn-primary btn-lg">使用 Google 帳號登入</button>
+            <h2 class="mb-4"><strong>請使用已認證身分登入</strong></h2>
+            <p class="text-muted"><strong>本系統僅供授權管理員使用</strong></p>
+            <button id="login-btn" style="
+                background-color: rgb(205, 211, 225); 
+                border: 3px solid #1e3a72; 
+                border-radius: 8px;
+                align-items: center;
+                justify-content: center;
+                padding: 10px 60px;
+            ">
+                <img src="./images/google.webp" alt="Google 登入" style="width: 150px;">
+            </button>
         </div>
 
         <div id="admin-content" style="display: none;">
@@ -48,13 +57,13 @@
     <script type="module">
         // 引入 Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        
+
         // 【修正 1】增加 setPersistence 與 browserSessionPersistence 的導入
-        import { 
-            getAuth, 
-            signInWithPopup, 
-            GoogleAuthProvider, 
-            onAuthStateChanged, 
+        import {
+            getAuth,
+            signInWithPopup,
+            GoogleAuthProvider,
+            onAuthStateChanged,
             signOut,
             setPersistence,           // 必須導入
             browserSessionPersistence // 必須導入
@@ -83,15 +92,22 @@
         const adminContent = document.getElementById('admin-content');
         const adminNameSpan = document.getElementById('admin-name');
 
-        // 監聽登入狀態
+        // 監聽登入狀態改變
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                // 檢查是否在管理員白名單內
                 if (adminEmails.includes(user.email)) {
-                    // 成功登入且為管理員
-                    loginSection.style.display = 'none';
-                    adminContent.style.display = 'block';
-                    logoutBtn.style.display = 'block';
+                    console.log("驗證成功，準備跳轉...");
+
+                    // 更新 UI (選擇性，因為即將跳轉)
                     adminNameSpan.textContent = user.displayName;
+
+                    // 【關鍵】登入成功後跳轉至指定頁面
+                    // 使用 setTimeout 稍微延遲，確保 Firebase 狀態已完全寫入
+                    setTimeout(() => {
+                        window.location.href = "order_page.html";
+                    }, 500);
+
                 } else {
                     // 已登入但非管理員
                     alert("權限不足：您的帳號並非授權商家。");
