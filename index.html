@@ -48,9 +48,19 @@
     <script type="module">
         // 引入 Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        
+        // 【修正 1】增加 setPersistence 與 browserSessionPersistence 的導入
+        import { 
+            getAuth, 
+            signInWithPopup, 
+            GoogleAuthProvider, 
+            onAuthStateChanged, 
+            signOut,
+            setPersistence,           // 必須導入
+            browserSessionPersistence // 必須導入
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // 1. TODO: 請填入您的 Firebase 專案配置 (在 Firebase Console 點選 Web 應用程式獲取)
+        // Firebase 專案配置
         const firebaseConfig = {
             apiKey: "AIzaSyAEKrtUed8tzL1s072W9eWrTfT1RXfkOKA",
             authDomain: "test01-dd13e.firebaseapp.com",
@@ -64,7 +74,7 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // 2. 設定管理員白名單 (請改為您的 Email)
+        // 設定管理員白名單
         const adminEmails = ["moonlightcafe.com@gmail.com"];
 
         const loginBtn = document.getElementById('login-btn');
@@ -73,42 +83,39 @@
         const adminContent = document.getElementById('admin-content');
         const adminNameSpan = document.getElementById('admin-name');
 
-        // 監聽登入狀態改變
+        // 監聽登入狀態
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // 1. 檢查是否為管理員 Email
                 if (adminEmails.includes(user.email)) {
-                    console.log("驗證成功，正在導向訂單管理頁...");
-
-                    // 2. 自動跳轉到訂單頁面
-                    window.location.href = 'order_page.html';
-
+                    // 成功登入且為管理員
+                    loginSection.style.display = 'none';
+                    adminContent.style.display = 'block';
+                    logoutBtn.style.display = 'block';
+                    adminNameSpan.textContent = user.displayName;
                 } else {
-                    // 3. 如果登入者不是管理員，強制登出並警告
-                    alert("權限不足：您非授權商家帳號！");
-                    signOut(auth).then(() => {
-                        window.location.reload();
-                    });
+                    // 已登入但非管理員
+                    alert("權限不足：您的帳號並非授權商家。");
+                    signOut(auth);
                 }
             } else {
-                // 未登入狀態，保持在首頁顯示登入按鈕
+                // 未登入狀態
                 loginSection.style.display = 'block';
-                console.log("請先登入");
+                adminContent.style.display = 'none';
+                logoutBtn.style.display = 'none';
             }
         });
 
         // 登入事件
         loginBtn.onclick = async () => {
             try {
-                // 【關鍵】設定持久化為 Session (分頁關閉即失效)
+                // 確保先設定持久化策略，再執行登入
                 await setPersistence(auth, browserSessionPersistence);
-
-                // 接著才執行登入
                 await signInWithPopup(auth, provider);
-
-                console.log("登入成功，且設定為關閉頁面後自動登出");
+                console.log("登入成功");
             } catch (error) {
-                console.error("登入失敗", error);
+                console.error("登入錯誤代碼:", error.code);
+                console.error("錯誤訊息:", error.message);
+                alert("登入失敗，請查看控制台報錯。");
             }
         };
 
