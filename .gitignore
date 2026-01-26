@@ -1,0 +1,15 @@
+# 這裡存放環境變數，絕對不能上傳
+.env
+.env.local
+.env.*.local
+
+# 忽略依賴套件 (這會讓專案變得很重，且大家都會重新安裝)
+node_modules/
+dist/
+
+# 忽略編譯後的日誌與快取
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vscode/
+.DS_Store
