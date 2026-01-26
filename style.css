@@ -1,0 +1,117 @@
+:root {
+    --accent-color: #4fd1c5;    /* 重點色：粉綠色 */
+    --input-bg: #f1f5f9;        /* 輸入框淺灰底 */
+    --text-dark: #1a202c;       /* 輸入框內深色字 */
+}
+
+/* 基礎頁面設定*/
+body {
+    background-color: #5f75a5;
+    color: #f7fafc !important;
+}
+
+
+/* 讓文字變為純白 */
+.custom-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 1rem ;
+    font-weight: 800 ;
+    letter-spacing: 1px;
+}
+
+.navbar-brand {
+    font-size: 1.7rem ;
+    font-weight: 800 ;
+    letter-spacing: 1px;
+}
+
+/* 卡片與區塊組件 */
+.card {
+    background-color: #2d3748;
+    color:#f7fafc  !important ;
+    border: none !important;
+    border-radius: 16px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* AI 生成後的結果容器 */
+.result-box {
+    background-color: rgba(79, 209, 197, 0.1) !important;
+    border: 1px dashed var(--accent-color) !important;
+    color: var(--text-light) !important;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* 表單與文字控制*/
+/* 統一標籤與粗體字樣式 (移除重複，合併屬性) */
+label, .font-weight-bold {
+    font-size: 1rem !important;
+    color: var(--text-light) !important;
+    margin-bottom: 10px !important;
+    display: inline-block;
+}
+
+
+
+/* AI 結果區塊內容細項樣式 */
+#resultArea .badge {
+    font-size: 1rem;
+    display: inline-block;
+}
+
+#resTitle, #resPrice, #resDesc {
+    font-size: 1.1rem !important;
+    margin-left: 2px;
+    line-height: 1.8;
+}
+
+
+
+/* --- 5. 按鈕樣式與佈局 --- */
+.btn-success {
+    background-color: var(--accent-color) !important;
+    border: none !important;
+    color: var(--text-dark) !important;
+    font-weight: bold;
+}
+
+/* 按鈕置中容器 */
+.button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    gap: 15px; /* 按鈕間距 */
+}
+
+
+
+
+.product-card .price-text {
+    font-size: 1.25rem;
+    color: #fc8181; /* 紅，讓價格更顯眼 */
+    font-weight: bold;
+}
+
+
+/* 設定容器為正方形 */
+.card-img-container {
+    width: 100%;
+    aspect-ratio: 1 / 1 !important; /* 強制 1:1 */
+    overflow: hidden;
+    background-color: #343a40;      /* 增加深色底色，避免破圖時太難看 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 強制圖片填滿且不變形 */
+.card-img-container img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;    /* 這是防止拉伸的最核心屬性 */
+    object-position: center;
+}
