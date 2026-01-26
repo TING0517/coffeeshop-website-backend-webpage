@@ -27,9 +27,9 @@
 
         <div id="admin-content" style="display: none;">
             <div class="alert alert-success">
-                歡迎回來，<span id="admin-name" class="fw-bold"></span>！您已成功進入後台。
+                歡迎回來，<span id="admin-name" class="fw-bold"></span>！您已成功進入商家後台系統。
             </div>
-            
+
             <div class="row mt-4">
                 <div class="col-md-12">
                     <div class="card">
@@ -75,21 +75,25 @@
 
         // 監聽登入狀態改變
         onAuthStateChanged(auth, (user) => {
-            if (user && adminEmails.includes(user.email)) {
-                // 成功登入且為管理員
-                loginSection.style.display = 'none';
-                adminContent.style.display = 'block';
-                logoutBtn.style.display = 'block';
-                adminNameSpan.textContent = user.displayName;
-            } else if (user) {
-                // 已登入但非管理員
-                alert("權限不足：您的帳號並非授權商家。");
-                signOut(auth);
+            if (user) {
+                // 1. 檢查是否為管理員 Email
+                if (adminEmails.includes(user.email)) {
+                    console.log("驗證成功，正在導向訂單管理頁...");
+
+                    // 2. 自動跳轉到訂單頁面
+                    window.location.href = 'order_page.html';
+
+                } else {
+                    // 3. 如果登入者不是管理員，強制登出並警告
+                    alert("權限不足：您非授權商家帳號！");
+                    signOut(auth).then(() => {
+                        window.location.reload();
+                    });
+                }
             } else {
-                // 未登入
+                // 未登入狀態，保持在首頁顯示登入按鈕
                 loginSection.style.display = 'block';
-                adminContent.style.display = 'none';
-                logoutBtn.style.display = 'none';
+                console.log("請先登入");
             }
         });
 
