@@ -10,14 +10,17 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .result-box {
+            /* 有ai生成結果時才顯示 */
             display: none;
         }
 
         .loading-spinner {
+            /* 按下按鈕才顯示 */
             display: none;
         }
 
         body {
+            /* 驗證成功前，整個頁面都不顯示 */
             display: none;
         }
     </style>
@@ -58,62 +61,63 @@
 
 
 
-    <div class="container-fluid px-4">
+    <div class="container-fluid px-4 mb-2">
         <div class="row justify-content-center">
             <div class="card ai-card">
                 <div class="card-body">
-                    <p class="text-muted" style="color: #cbd5e0 !important;">請輸入商品的基本資訊，AI 將為您自動生成標題、描述與關鍵字。</p>
+                    <p class="text-muted" style="color: #e6edf4 !important;">請輸入商品的基本資訊，AI 將為您自動生成標題、描述與關鍵字。</p>
 
-                    <div class="form-group">
-                        <label class="font-weight-bold">商品名稱</label>
+                    <div class="form-group mb-2">
+                        <label class="font-weight-bold mb-1">商品名稱</label>
                         <input type="text" id="aiName" class="form-control">
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="font-weight-bold">預計售價</label>
+                            <div class="form-group mb-2">
+                                <label class="font-weight-bold mb-1">銷售售價</label>
                                 <input type="number" id="aiPrice" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="font-weight-bold">產品關鍵字</label>
+                            <div class="form-group mb-2">
+                                <label class="font-weight-bold mb-1">產品關鍵字</label>
                                 <input type="text" id="aiKeys" class="form-control" placeholder="使用、分隔">
                             </div>
                         </div>
                     </div>
 
-                    <div class="d-grid col-md-6 mx-auto mt-4">
-                        <button id="btn-gen" class="btn btn-info fw-bold shadow-sm">
-                            <span class="loading-spinner spinner-border spinner-border-sm me-2"></span><span
-                                class="btn-text">開始 AI 生成內容</span>
-                        </button>
+                    <div class="text-center mt-4">
+                        <button id="btn-gen" class="btn btn-success fw-bold shadow-sm px-4" style="height: 50px; min-width: 250px;">
+                        <span class="loading-spinner spinner-border spinner-border-sm me-2" style="display:none;"></span>
+                        <span class="btn-text">開始 AI 生成內容</span>
+                    </button>
                     </div>
 
                     <div id="resultArea" class="result-box mt-5">
-                        <h4 class="text-info border-bottom pb-3 mb-4">✨ AI 建議方案</h4>
+                        <h4 class="border-bottom pb-3 mb-4">✨ AI 建議方案</h4>
 
                         <div class="mb-4">
-                            <div class="badge bg-secondary mb-2">建議標題</div>
-                            <div id="resTitle" class="fw-bold text-white"></div>
+                            <div class="badge bg-secondary mb-2">商品名稱</div>
+                            <div id="resTitle" class="fw-bold"></div>
                         </div>
 
                         <div class="mb-4">
-                            <div class="badge bg-secondary mb-2">建議售價</div>
+                            <div class="badge bg-secondary mb-2">銷售售價</div>
                             <div id="resPrice" class="text-danger fw-bold"></div>
                         </div>
 
                         <div class="mb-4">
                             <div class="badge bg-secondary mb-2">文案內容</div>
-                            <div id="resDesc" class="text-light" style="white-space: pre-line;"></div>
+                            <div id="resDesc" style="white-space: pre-line;"></div>
                         </div>
 
-                        <div class="button-container">
-                            <button id="btn-confirm" class="btn btn-success shadow-sm">
-                                ✅ 內容完美，前往上架頁面
+                        <div class="text-center mt-5">
+                            <button id="btn-confirm" class="btn btn-success fw-bold shadow-sm px-5" style="height: 50px; min-width: 250px;">
+                                ✅ 確認生成內容，前往商品上架頁面
                             </button>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -122,119 +126,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        // 你的 Firebase Config (請務必填寫正確)
-        const firebaseConfig = {
-            apiKey: "AIzaSyAEKrtUed8tzL1s072W9eWrTfT1RXfkOKA",
-            authDomain: "test01-dd13e.firebaseapp.com",
-            projectId: "test01-dd13e",
-            storageBucket: "test01-dd13e.firebasestorage.app",
-            messagingSenderId: "262581605790",
-            appId: "1:262581605790:web:456fcca5091299e285728f"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const adminEmails = ["moonlightcafe.com@gmail.com"]; // 你的商家管理帳號
-
-        // 執行身分檢查
-        onAuthStateChanged(auth, (user) => {
-            if (user && adminEmails.includes(user.email)) {
-                // ✅ 情況 A：已登入且是管理員
-                console.log("驗證通過");
-                document.body.style.display = "block"; // 只有這時才解除隱藏，顯示介面
-            } else {
-                // ❌ 情況 B：未登入或身分不符
-                if (user) {
-                    alert("此帳號無管理權限");
-                }
-                // 直接強制跳轉回登入首頁
-                window.location.href = "index.html";
-            }
-        });
-
-
-
-        // AI 生成按鈕點擊事件
-        document.getElementById('btn-gen').addEventListener('click', async () => {
-            const name = document.getElementById('aiName').value;
-            const price = document.getElementById('aiPrice').value;
-            const keys = document.getElementById('aiKeys').value;
-
-            if (!name) return alert("請輸入商品名稱");
-
-            // UI 狀態切換：顯示載入中
-            $('.loading-spinner').show();
-            $('.btn-text').text('AI 思考中...');
-            $('#btn-gen').prop('disabled', true);
-            $('#resultArea').hide();
-
-            try {
-                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": "Bearer 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",
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        model: "llama-3.3-70b-versatile",
-                        messages: [
-                            {
-                                role: "system",
-                                content: `你是一位專業的台灣質感咖啡廳品牌行銷專家。請根據提供的資訊生成一個 JSON 物件。 JSON 格式必須嚴格遵守：{ "title": "...", "detail": "...", "price": 數字 }。
-
-                                關於 "detail" 欄位，請務必按照以下結構撰寫，並確保內容超過 250 字，口吻溫柔、文青且具儀式感：
-                                [開頭感性文案]：請根據title的商品名稱寫一段感性詩句作為開場（不須標題），字數介於30到40字，且整段文字必須使用「粗斜體」格式（例如：<b><i>這是一段午後的溫柔語錄...</i></b>）。
-
-                                【風味層次】：生動描述風味的前調、中調與餘韻（如：微酸後的甘甜、綿密細緻的口感）。
-
-                                【職人堅持】：使用條列點（•）描述食材來源（如在地小農、職人烘焙、天然無添加）與手作工藝的堅持。
-
-                                【品嚐建議】：提供最佳享用方式（如：建議先啜吸一口原味、建議搭配的甜點或飲品）。
-
-                                【產品資訊】：飲品容量（皆為500ml）或甜點份量（蛋糕類皆為切片）、食材過敏原提醒等，並特別標註圖片僅供參考。
-
-                                請使用台灣咖啡廳、文藝社群風格常用詞彙（如「日常」、「溫潤」、「餘韻」、「手作」、「靜謐」），並在 detail 中適當換行以確保良好的閱讀體驗。`
-                            },
-                            { role: "user", content: `品名: ${name}, 售價: ${price}` }
-                        ],
-                        response_format: { "type": "json_object" }
-                    })
-                });
-
-                const data = await response.json();
-                const result = JSON.parse(data.choices[0].message.content);
-
-                // 顯示結果
-                $('#resTitle').text(result.title);
-                $('#resPrice').text(`NT$ ${result.price}`);
-                $('#resDesc').html(result.detail);
-                $('#resultArea').fadeIn();
-
-                // 將資料暫存到 localStorage (這是跨頁面傳遞的關鍵)
-                localStorage.setItem('pending_product', JSON.stringify(result));
-
-            } catch (err) {
-                alert("AI 生成失敗，請確認 API Key 或網路狀況");
-                console.error(err);
-            } finally {
-                $('.loading-spinner').hide();
-                $('.btn-text').text('開始 AI 生成內容');
-                $('#btn-gen').prop('disabled', false);
-            }
-        });
-
-        // 跳轉按鈕
-        document.getElementById('btn-confirm').addEventListener('click', () => {
-            // 跳轉到上架頁面
-            window.location.href = "product_upload.html";
-        });
-    </script>
-
+    <script src="./ai_generator.js" type="module"></script>
 </body>
 
 </html>

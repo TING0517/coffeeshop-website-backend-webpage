@@ -19,10 +19,10 @@
 
     <div class="container mt-5">
         <div id="login-section" class="text-center py-5">
-            <h2 class="mb-4"><strong>請使用已認證身分登入</strong></h2>
-            <p class="text-muted"><strong>本系統僅供授權管理員使用</strong></p>
+            <h2 class="mb-4"><strong>請使用已認證帳號登入</strong></h2>
+            <h5 class="text-muted mb-4"><strong>本系統僅供授權管理員使用</strong></h5>
             <button id="login-btn" style="
-                background-color: rgb(205, 211, 225); 
+                background-color: rgb(237, 238, 242); 
                 border: 3px solid #1e3a72; 
                 border-radius: 8px;
                 align-items: center;
@@ -57,15 +57,14 @@
         // 引入 Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
-        // 【修正 1】增加 setPersistence 與 browserSessionPersistence 的導入
         import {
             getAuth,
             signInWithPopup,
             GoogleAuthProvider,
             onAuthStateChanged,
             signOut,
-            setPersistence,           // 必須導入
-            browserSessionPersistence // 必須導入
+            setPersistence,           
+            browserSessionPersistence 
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         // Firebase 專案配置
@@ -91,24 +90,18 @@
         const adminContent = document.getElementById('admin-content');
         const adminNameSpan = document.getElementById('admin-name');
 
-        // 監聽登入狀態改變
+        
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // 檢查是否在管理員白名單內
                 if (adminEmails.includes(user.email)) {
                     console.log("驗證成功，準備跳轉...");
-
-                    // 更新 UI (選擇性，因為即將跳轉)
+                    // 更新 UI
                     adminNameSpan.textContent = user.displayName;
-
-                    // 【關鍵】登入成功後跳轉至指定頁面
-                    // 使用 setTimeout 稍微延遲，確保 Firebase 狀態已完全寫入
-                    setTimeout(() => {
-                        window.location.href = "order_page.html";
-                    }, 500);
+                    window.location.href = "order_page.html";
 
                 } else {
-                    // 已登入但非管理員
+                    // 非管理員
                     alert("權限不足：您的帳號並非授權商家。");
                     signOut(auth);
                 }
@@ -123,14 +116,13 @@
         // 登入事件
         loginBtn.onclick = async () => {
             try {
-                // 確保先設定持久化策略，再執行登入
                 await setPersistence(auth, browserSessionPersistence);
                 await signInWithPopup(auth, provider);
                 console.log("登入成功");
             } catch (error) {
                 console.error("登入錯誤代碼:", error.code);
                 console.error("錯誤訊息:", error.message);
-                alert("登入失敗，請查看控制台報錯。");
+                alert("登入失敗");
             }
         };
 

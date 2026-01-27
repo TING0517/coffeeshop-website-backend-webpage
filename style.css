@@ -1,63 +1,42 @@
-:root {
-    --accent-color: #4fd1c5;    /* 重點色：粉綠色 */
-    --input-bg: #f1f5f9;        /* 輸入框淺灰底 */
-    --text-dark: #1a202c;       /* 輸入框內深色字 */
-}
-
 * {
-  font-family: "Noto Sans TC", sans-serif;
+    font-family: "Noto Sans TC", sans-serif;
 }
 
 /* 基礎頁面設定*/
 body {
     background-color: #5f75a5;
-    color: #f7fafc !important;
+    color: #f7fafc;
 }
 
 
-/* 讓文字變為純白 */
+/* 導覽列 */
 .custom-navbar .nav-link {
     color: rgba(255, 255, 255, 0.9) !important;
-    font-size: 1rem ;
-    font-weight: 800 ;
+    font-size: 1rem;
+    font-weight: 700;
     letter-spacing: 1px;
 }
 
 .navbar-brand {
-    font-size: 1.7rem ;
-    font-weight: 800 ;
+    font-size: 1.7rem;
+    font-weight: 700;
     letter-spacing: 1px;
 }
 
-/* 卡片與區塊組件 */
+/* 卡片布局 */
 .card {
     background-color: #2d3748;
-    color:#f7fafc  !important ;
-    border: none !important;
-    border-radius: 16px;
-    margin: 10px 0;
-    font-weight: bold;
+    color: #f7fafc;
+    border: none;
 }
 
-/* AI 生成後的結果容器 */
+/* AI 生成後的結果布局 */
 .result-box {
-    background-color: rgba(79, 209, 197, 0.1) !important;
-    border: 1px dashed var(--accent-color) !important;
-    color: var(--text-light) !important;
+    background-color: rgba(79, 209, 197, 0.1);
+    border: 2px dashed;
     padding: 20px;
     border-radius: 12px;
 }
-
-/* 表單與文字控制*/
-/* 統一標籤與粗體字樣式 (移除重複，合併屬性) */
-label, .font-weight-bold {
-    font-size: 1rem !important;
-    color: var(--text-light) !important;
-    margin-bottom: 10px !important;
-    display: inline-block;
-}
-
-
 
 /* AI 結果區塊內容細項樣式 */
 #resultArea .badge {
@@ -65,7 +44,9 @@ label, .font-weight-bold {
     display: inline-block;
 }
 
-#resTitle, #resPrice, #resDesc {
+#resTitle,
+#resPrice,
+#resDesc {
     font-size: 1.1rem !important;
     margin-left: 2px;
     line-height: 1.8;
@@ -73,49 +54,34 @@ label, .font-weight-bold {
 
 
 
-/* --- 5. 按鈕樣式與佈局 --- */
+/* 按鈕樣式*/
 .btn-success {
-    background-color: var(--accent-color) !important;
-    border: none !important;
-    color: var(--text-dark) !important;
+    background-color: #4fd1c5;
+    border: none;
+    color: #1a202c;
     font-weight: bold;
 }
 
-/* 按鈕置中容器 */
-.button-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 10px;
-    gap: 15px; /* 按鈕間距 */
-}
-
-
-
-
+/* 商品清單價格顯示 */
 .product-card .price-text {
     font-size: 1.25rem;
-    color: #fc8181; /* 紅，讓價格更顯眼 */
+    color: #ff2e2e;
     font-weight: bold;
 }
 
 
-/* 設定容器為正方形 */
+/* 商品清單設定圖片容器為正方形 */
 .card-img-container {
     width: 100%;
-    aspect-ratio: 1 / 1 !important; /* 強制 1:1 */
+    height: 200px;
     overflow: hidden;
-    background-color: #343a40;      /* 增加深色底色，避免破圖時太難看 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: #deedff;
 }
 
 /* 強制圖片填滿且不變形 */
 .card-img-container img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;    /* 這是防止拉伸的最核心屬性 */
+    width: 100% ;
+    height: 100%;
+    object-fit: contain;
     object-position: center;
 }
