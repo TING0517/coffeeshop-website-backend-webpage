@@ -39,7 +39,8 @@ async function loadProducts() {
     const loader = document.getElementById('loadingSpinner');
 
     try {
-        const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+        const q = query(collection(db, "products"), orderBy("createdAt", "asc"));  
+        // asc:升冪排序  desc:降冪排序
         const querySnapshot = await getDocs(q);
 
         if (loader) loader.remove();
