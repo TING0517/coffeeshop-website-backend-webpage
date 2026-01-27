@@ -19,11 +19,9 @@ const adminEmails = ["moonlightcafe.com@gmail.com"]; // 商家管理帳號權限
 // 執行身分檢查
 onAuthStateChanged(auth, (user) => {
     if (user && adminEmails.includes(user.email)) {
-        // ✅ 情況 A：已登入且是管理員
         console.log("驗證通過");
-        document.body.style.display = "block"; // 只有這時才解除隱藏，顯示介面
+        document.body.style.display = "block"; 
     } else {
-        // ❌ 情況 B：未登入或身分不符
         if (user) {
             alert("此帳號無管理權限");
         }
@@ -104,7 +102,7 @@ async function loadProducts() {
 }
 
 function addEventHandlers() {
-    // 刪除邏輯
+    // 刪除
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const id = e.target.getAttribute('data-id');
@@ -120,7 +118,7 @@ function addEventHandlers() {
         });
     });
 
-    // 修改邏輯 (跳轉)
+    // 修改
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const id = e.target.getAttribute('data-id');
