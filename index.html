@@ -85,7 +85,6 @@
         const adminEmails = ["moonlightcafe.com@gmail.com"];
 
         const loginBtn = document.getElementById('login-btn');
-        const logoutBtn = document.getElementById('logout-btn');
         const loginSection = document.getElementById('login-section');
         const adminContent = document.getElementById('admin-content');
         const adminNameSpan = document.getElementById('admin-name');
@@ -109,7 +108,6 @@
                 // 未登入狀態
                 loginSection.style.display = 'block';
                 adminContent.style.display = 'none';
-                logoutBtn.style.display = 'none';
             }
         });
 
@@ -124,13 +122,6 @@
                 console.error("錯誤訊息:", error.message);
                 alert("登入失敗");
             }
-        };
-
-        // 登出事件
-        logoutBtn.onclick = () => {
-            signOut(auth).then(() => {
-                window.location.reload();
-            });
         };
     </script>
 </body>
