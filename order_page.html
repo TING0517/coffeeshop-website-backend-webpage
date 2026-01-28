@@ -42,22 +42,36 @@
         </div>
     </nav>
 
-    <div class="container-fluid mt-4 mb-3">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h2 class="text-white fw-bold">📋 訂單頁面</h2>
+    <div class="container-fluid my-4">
+        <div class="row g-3">
+            <div class="col-6 col-md-6">
+                <button class="btn btn-success w-100 fw-bold py-3" onclick="changeFilter('pending')">⏳ 待處理訂單</button>
             </div>
-        </div>
-
-        <div id="order-display-area" class="row g-4">
-            <div class="text-center text-white mt-5">
-                <div class="spinner-border text-light" role="status"></div>
-                <p class="mt-2 fw-bold">正在連接資料庫...</p>
+            <div class="col-3 col-md-2">
+                <button class="btn btn-info w-100 fw-bold py-3" onclick="changeFilter('completed')">✅已完成</button>
+            </div>
+            <div class="col-3 col-md-2">
+                <button class="btn btn-secondary w-100 fw-bold py-3" onclick="changeFilter('cancelled')">❌已取消</button>
+            </div>
+            <div class="col-md-2 d-none d-md-flex justify-content-center align-items-center">
+                <span id="current-time" class="text-white fw-bold fs-1"></span>
             </div>
         </div>
     </div>
 
-    <script src="./order_page.js" type="module"></script>
+    <div class="container-fluid mt-4 mb-3">
+        <div class="container-fluid mb-4">
+
+
+            <div id="order-display-area" class="row g-4">
+                <div class="text-center text-white mt-5">
+                    <div class="spinner-border text-light" role="status"></div>
+                    <p class="mt-2 fw-bold">正在連接資料庫...</p>
+                </div>
+            </div>
+        </div>
+
+        <script src="./order_page.js" type="module"></script>
 </body>
 
 </html>
