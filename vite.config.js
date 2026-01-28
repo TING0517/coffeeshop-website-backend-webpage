@@ -6,9 +6,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        order: resolve(__dirname, 'order_page.html'), // 加入你的第二個頁面
-        // 如果還有其他頁面，依此類推...
-      },
-    },
-  },
+        order: resolve(__dirname, 'order_page.html'),
+        ai: resolve(__dirname, 'ai_generator.html'),
+        product_list: resolve(__dirname, 'product_list.html'),
+        product_upload: resolve(__dirname, 'product_upload.html'),
+      }
+    }
+  }
 });
