@@ -28,9 +28,9 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg sticky-top custom-navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg sticky-top navbar-custom navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand">🛒 商店後台管理系統</a>
+            <a class="navbar-brand"><span style="margin-right: 8px;">☕</span>Moonlight Café 後台</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -40,7 +40,7 @@
                         <a class="nav-link" id="nav-order" href="order_page.html">📋 訂單頁面</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="nav-ai" href="ai_generator.html">✨ AI 輔助上架</a>
+                        <a class="nav-link active" id="nav-ai" href="ai_generator.html">✨ AI 輔助上架</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="nav-upload" href="product_upload.html">📦 商品上架</a>
@@ -54,10 +54,10 @@
     </nav>
 
 
-    <div class="container-fluid mt-4 mb-3">
+    <div class="container-fluid mt-4 mb-3 px-4">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h2 class="text-white fw-bold">✨ AI 商品靈感生成助手</h2>
+                <h2 class="section-title">✨ AI 商品靈感生成助手</h2>
             </div>
         </div>
     </div>
@@ -68,33 +68,35 @@
         <div class="row justify-content-center">
             <div class="card ai-card">
                 <div class="card-body">
-                    <p class="text-muted" style="color: #e6edf4 !important;">請輸入商品的基本資訊，AI 將為您自動生成標題、描述與關鍵字。</p>
+                    <p>請輸入商品的基本資訊，AI 將為您自動生成標題、描述與關鍵字。</p>
 
                     <div class="form-group mb-2">
-                        <label class="font-weight-bold mb-1">商品名稱</label>
+                        <label class="form-label mb-1">商品名稱</label>
                         <input type="text" id="aiName" class="form-control">
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-2">
-                                <label class="font-weight-bold mb-1">銷售售價</label>
-                                <input type="number" id="aiPrice" class="form-control">
+                                <label class="form-label mb-1">銷售售價</label>
+                                <input type="text" id="aiPrice" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-2">
-                                <label class="font-weight-bold mb-1">產品關鍵字</label>
+                                <label class="form-label mb-1">產品關鍵字</label>
                                 <input type="text" id="aiKeys" class="form-control" placeholder="使用、分隔">
                             </div>
                         </div>
                     </div>
 
                     <div class="text-center mt-4">
-                        <button id="btn-gen" class="btn btn-success fw-bold shadow-sm px-4" style="height: 50px; min-width: 250px;">
-                        <span class="loading-spinner spinner-border spinner-border-sm me-2" style="display:none;"></span>
-                        <span class="btn-text">開始 AI 生成內容</span>
-                    </button>
+                        <button id="btn-gen" class="btn btn-primary fw-bold shadow-sm px-4"
+                            style="height: 50px; min-width: 250px;">
+                            <span class="loading-spinner spinner-border spinner-border-sm me-2"
+                                style="display:none;"></span>
+                            <span class="btn-text">開始 AI 生成內容</span>
+                        </button>
                     </div>
 
                     <div id="resultArea" class="result-box mt-5">
@@ -116,16 +118,17 @@
                         </div>
 
                         <div class="text-center mt-5">
-                            <button id="btn-confirm" class="btn btn-success fw-bold shadow-sm px-5" style="height: 50px; min-width: 250px;">
+                            <button id="btn-confirm" class="btn btn-primary fw-bold shadow-sm px-5"
+                                style="height: 50px; min-width: 250px;">
                                 ✅ 確認生成內容，前往商品上架頁面
                             </button>
                         </div>
                     </div>
-                    </div>
                 </div>
             </div>
-
         </div>
+
+    </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

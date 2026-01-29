@@ -17,10 +17,9 @@
 </head>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg sticky-top custom-navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg sticky-top navbar-custom navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand">🛒 商店後台管理系統</a>
+            <a class="navbar-brand"><span style="margin-right: 8px;">☕</span>Moonlight Café 後台</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,7 +35,7 @@
                         <a class="nav-link" id="nav-upload" href="product_upload.html">📦 商品上架</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="nav-list" href="product_list.html">🔍 商品查詢/修改</a>
+                        <a class="nav-link active" id="nav-list" href="product_list.html">🔍 商品查詢/修改</a>
                     </li>
                 </ul>
             </div>
@@ -44,17 +43,17 @@
     </nav>
 
 
-    <div class="container-fluid mt-4 mb-2">
+    <div class="container-fluid mt-4 mb-2 px-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-                <h2 class="text-white fw-bold">🔍 商品查詢/修改</h2>
+                <h2 class="section-title">🔍 商品查詢/修改</h2>
             </div>
         </div>
 
         <div id="productCardContainer" class="row g-4">
             <div class="col-12 text-center py-5" id="loadingSpinner">
-                <div class="spinner-border text-light" role="status"></div>
-                <p class="mt-2 text-muted" style="color: #ffffff !important; font-weight: 600;">正在連接資料庫...</p>
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2 text-white fw-bold">正在連接資料庫...</p>
             </div>
         </div>
     </div>

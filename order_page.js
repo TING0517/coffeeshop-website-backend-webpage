@@ -140,16 +140,16 @@ function startListeningOrders(filterType = 'pending') {
       `).join("");
 
       const card = document.createElement("div");
-      card.className = "card mb-4 shadow-sm border-0 w-100 h-100";
-      card.style.backgroundColor = "#2d3748";
+      card.className = "card mb-4 shadow-sm w-100";
+
 
       card.innerHTML = `
-        <div class="card-header bg-dark text-white d-flex justify-content-between">
-          <span class="fw-bold text-white">訂單編號：${orderNumber}</span>
+        <div class="card-header bg-dark d-flex justify-content-between">
+          <span class="fw-bold" style="color: var(--primary);">訂單編號：${orderNumber}</span>
           <span class="fw-bold text-white">${orderTime}</span>
         </div>
-        <div class="card-body d-flex flex-column">
-          <ul class="list-group list-group-flush flex-grow-1">
+        <div class="card-body d-flex flex-column" style="background-color: transparent;">
+          <ul class="list-group list-group-flush flex-grow-1" style="background-color: transparent;">
             ${itemsHtml}
           </ul>
           <div class="d-flex justify-content-between mt-auto mb-2 pt-3 border-top border-secondary">
@@ -171,7 +171,6 @@ function startListeningOrders(filterType = 'pending') {
 
 function updateClock() {
     const now = new Date();
-    // 格式化時間為: 2026/1/28 16:30:05
     const timeString = now.toLocaleString('zh-TW', {
         hour12: false,
         hour: '2-digit',
