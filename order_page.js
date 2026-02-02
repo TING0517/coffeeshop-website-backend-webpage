@@ -58,6 +58,7 @@ window.updateStatus = async (orderId, newStatus) => {
 };
 
 let unsubscribe = null;
+let activeOrders = []; // 儲存目前顯示的訂單，供逾時檢查使用
 // 切換篩選狀態的函式
 // 供 HTML 按鈕呼叫的切換函數
 window.changeFilter = (filterType) => {
@@ -85,14 +86,18 @@ function startListeningOrders(filterType = 'pending') {
     const listContainer = document.getElementById("order-display-area");
     if (!listContainer) return;
     listContainer.innerHTML = "";
+    activeOrders = []; // 重置列表
 
     if (snapshot.empty) {
-      listContainer.innerHTML = `<div class="alert alert-info text-center w-100">📭 目前沒有這類別的訂單。</div>`;
+      listContainer.innerHTML = `<div class="alert alert-info text-center w-100">目前沒有這類別的訂單。</div>`;
       return;
     }
 
     snapshot.forEach((doc) => {
       const order = doc.data();
+      // 儲存 ID 供後續操作
+      order.id = doc.id;
+      activeOrders.push(order);
       
       const orderNumber = order.timestamp
         ? (() => {
@@ -167,6 +172,33 @@ function startListeningOrders(filterType = 'pending') {
     console.error("Firestore 監聽失敗:", error);
   });
 }
+
+// 自動檢查逾時訂單 (每15秒檢查一次)
+// 規則：狀態為 1 (待處理) 且建立時間超過 5 分鐘
+function checkTimeoutOrders() {
+    const now = Date.now();
+    const timeoutDuration = 5 * 60 * 1000; // 5分鐘 (毫秒)
+
+    activeOrders.forEach(async (order) => {
+        if (order.order_status === 1 && order.timestamp) {
+            const orderTime = new Date(order.timestamp).getTime();
+            if (now - orderTime > timeoutDuration) {
+                console.log(`訂單 ${order.id} 逾時 (${Math.floor((now-orderTime)/1000)}秒)，自動取消`);
+                
+                try {
+                    // 直接呼叫 updateDoc，不經過 window.updateStatus 以免觸發 confirm 視窗
+                    const orderRef = doc(db, "cafe_orders", order.id);
+                    await updateDoc(orderRef, { order_status: 0 }); // 0 = 已取消
+                    console.log(`訂單 ${order.id} 已自動取消`);
+                } catch (e) {
+                    console.error(`自動取消訂單 ${order.id} 失敗:`, e);
+                }
+            }
+        }
+    });
+}
+
+setInterval(checkTimeoutOrders, 15000); // 15000ms = 15秒
 
 
 function updateClock() {
