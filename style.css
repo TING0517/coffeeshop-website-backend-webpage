@@ -63,7 +63,7 @@ a {
     background-color: rgba(30, 34, 41, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
-    padding: 0.8rem 1rem;
+    padding: 0.2rem 1rem;
     box-shadow: var(--shadow-sm);
 }
 
