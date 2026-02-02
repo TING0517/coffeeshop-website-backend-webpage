@@ -60,6 +60,7 @@ a {
 /* 導覽列 */
 .navbar-custom {
     font-family: 'LXGW WenKai TC', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+    font-size: 1.1rem;
     background-color: rgba(30, 34, 41, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
