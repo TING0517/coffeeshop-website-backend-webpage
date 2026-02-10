@@ -14,14 +14,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const adminEmails = ["moonlightcafe.com@gmail.com"]; // 商家管理帳號權限
 
 // 執行身分檢查
 onAuthStateChanged(auth, (user) => {
-    if (user) {
+    if (user && adminEmails.includes(user.email)) {
         console.log("驗證通過");
         document.body.style.display = "block"; 
     } else {
-        // 未登入，直接強制跳轉回登入首頁
+        if (user) {
+            alert("此帳號無管理權限");
+        }
+        // 直接強制跳轉回登入首頁
         window.location.href = "index.html";
     }
 });
