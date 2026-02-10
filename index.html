@@ -103,8 +103,7 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // 設定管理員白名單
-        const adminEmails = ["moonlightcafe.com@gmail.com"];
+
 
         const loginBtn = document.getElementById('login-btn');
         const loginSection = document.getElementById('login-section');
@@ -114,21 +113,11 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // 檢查是否在管理員白名單內
-                if (adminEmails.includes(user.email)) {
-                    console.log("驗證成功，準備跳轉...");
-                    // 更新 UI
-                    adminNameSpan.textContent = user.displayName;
-                    // 原本直接跳轉，現在為了展示效果，先顯示內容（實際使用可根據需求調整）
-                    // 為了避免瞬間跳轉看不到新樣式，這裡可以稍微延遲，或者直接顯示 adminContent
-                    // 但依照原邏輯是直接跳轉：
-                    window.location.href = "order_page.html";
-
-                } else {
-                    // 非管理員
-                    alert("權限不足：您的帳號並非授權商家。");
-                    signOut(auth);
-                }
+                console.log("登入成功，準備跳轉...");
+                // 更新 UI
+                adminNameSpan.textContent = user.displayName;
+                // 直接跳轉到訂單頁面，由 Firestore Rules 進行最終權限控管
+                window.location.href = "order_page.html";
             } else {
                 // 未登入狀態
                 loginSection.style.display = 'block';

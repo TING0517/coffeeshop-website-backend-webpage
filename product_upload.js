@@ -16,20 +16,15 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
-const adminEmails = ["moonlightcafe.com@gmail.com"]; // 商家管理帳號
 
 // 執行身分檢查
 onAuthStateChanged(auth, (user) => {
-    if (user && adminEmails.includes(user.email)) {
-        // 已登入且是管理員
+    if (user) {
+        // 已登入
         console.log("驗證通過");
         document.body.style.display = "block";
     } else {
-        // 未登入或身分不符
-        if (user) {
-            alert("此帳號無管理權限");
-        }
-        // 直接強制跳轉回登入首頁
+        // 未登入，直接強制跳轉回登入首頁
         window.location.href = "index.html";
     }
 });
